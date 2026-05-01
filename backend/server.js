@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express()
+const noteRoute = require('./routes/noteRoute.js')
 
 const PORT = process.env.PORT || 3100
 
 
-app.get("/api/notes", (req, res)=>{
-    res.send("you got 5 notes")
-})
+app.use('/api/notes', noteRoute)
+
+
 
 app.listen(PORT, ()=>{
-    console.log(` running on ${PORT}`)
+    console.log(`server running on ${PORT}`)
 })
