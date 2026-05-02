@@ -7,7 +7,7 @@ const rateLimiter = require('./middleware/rateLimiter.js')
 
 dotenv.config()
 
-connectDB()
+
 
 const PORT = process.env.PORT || 3100
 // middleware
@@ -22,8 +22,9 @@ app.use(rateLimiter)
 // endpoints
 app.use('/api/notes', noteRoute)
 
-
-
-app.listen(PORT, ()=>{
+connectDB().then(()=>{
+    console.log("Database connected, starting server...")
+    app.listen(PORT, ()=>{
     console.log(`server running on ${PORT}`)
+})
 })
