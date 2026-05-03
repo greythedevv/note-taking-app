@@ -5,6 +5,8 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import NoteCard from '../components/NoteCard.jsx'
+import api from '../lib/axios.js'
+import NotesNotFound from '../components/NoteNotFound.jsx'
 
 
 const HomePage = () => {
@@ -15,7 +17,7 @@ const HomePage = () => {
  useEffect(() => {
   const fetchNotes = async () => {
     try {
-      const response = await axios.get('http://localhost:3100/api/notes')
+      const response = await api.get('/notes')
       console.log('Fetched notes:', response.data)
       setNote(response.data)
       setIsRateLimited(false)
@@ -46,10 +48,11 @@ const HomePage = () => {
             <div className='grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6'>
 
               {note.map((note) => (
-                <NoteCard key={note._id} note={note} />
+                <NoteCard key={note._id} note={note} setNote={setNote} />
               ))}
             </div>
           )}
+          {note.length === 0 && !israteLimited && !loading && <NotesNotFound />}
       </div>
     </div>
   )
