@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express()
+const cors = require('cors')
 const noteRoute = require('./routes/noteRoute.js')
 const connectDB = require('./config/db.js')
 const dotenv = require('dotenv')
 const rateLimiter = require('./middleware/rateLimiter.js')
+
 
 dotenv.config()
 
@@ -11,6 +13,10 @@ dotenv.config()
 
 const PORT = process.env.PORT || 3100
 // middleware
+app.use(cors({
+    origin: 'http://localhost:5173',
+}))
+
 app.use(express.json())
 
 // app.use((req, res, next)=>{
